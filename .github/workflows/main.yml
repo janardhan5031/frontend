@@ -1,33 +1,30 @@
-name: Deployment S3
-
+name: Continuous Deployment
 on:
   push:
     branches:
-      - main
-
+      - dev
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get install -y awscli
-        # Ensure AWS CLI is installed and available
-        env:
-          aws-access-key-id: "AKIA6FLQ2HYG2X5DGZVK"
-          aws-secret-access-key: "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"
-          aws-region: us-east-1
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3.1.1
+      #   with:
+      #     version: 12.x
 
-      - name: Deploy to S3
-        run: |
-           export AWS_EC2_METADATA_DISABLED=true
-           aws s3 rm s3://testbucketsq --recursive --region us-east-1 --debug
-          
-        env:
-          aws-access-key-id: "AKIA6FLQ2HYG2X5DGZVK"
-          aws-secret-access-key: "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"
-          aws-region: us-east-1
+      # - name: Install dependencies
+      #   run: |
+      #     npm install @aws-amplify/cli -g
+      #     npm i
+      # - name: Build project
+      #   run: CI=false npm run build
+
+      - name: Deploy
+        uses: Reggionick/s3-deploy@v3.1.1
+        with:
+          folder: build
+          bucket: testbucketsq
+          bucket-region: ap-south-1
