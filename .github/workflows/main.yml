@@ -21,16 +21,14 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
-        working-directory: ./build
 
       - name: Build React App
         run: |
           npm run build
-        working-directory: ./path/to/your/react/app
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./build s3://testbucketsq/
+          aws s3 rm s3://testbucketsq/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
