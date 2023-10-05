@@ -23,8 +23,8 @@ jobs:
           sudo apt-get install -y awscli
         # Ensure AWS CLI is installed and available
         env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: "AKIA6FLQ2HYG2X5DGZVK"
+          aws-secret-access-key: "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"
           aws-region: us-east-1
 
       - name: Deploy to S3
@@ -33,6 +33,6 @@ jobs:
            aws s3 rm s3://testbucketsq --recursive --region us-east-1 --debug
           
         env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: "AKIA6FLQ2HYG2X5DGZVK"
+          aws-secret-access-key: "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"
           aws-region: us-east-1
