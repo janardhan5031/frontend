@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 rm s3://testbucketsq
+          aws s3 rm s3://testbucketsq --recursive --debug
           
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
