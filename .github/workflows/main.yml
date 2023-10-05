@@ -1,4 +1,4 @@
-name: Deployment S3
+name: Deploy React App to S3
 
 on:
   push:
@@ -11,24 +11,27 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "16"
 
-      - name: Install AWS CLI
+      - name: Install npm dependencies
         run: |
-          sudo apt-get install -y awscli
-        # Ensure AWS CLI is installed and available
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          npm install
+        working-directory: ./build
+
+      - name: Build React App
+        run: |
+          npm run build
+        working-directory: ./path/to/your/react/app
 
       - name: Deploy to S3
         run: |
-          aws s3 rm s3://testbucketsq
+          aws s3 sync ./build s3://testbucketsq/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
