@@ -1,4 +1,4 @@
-name: Travana Deployment S3
+name: Deployment S3
 
 on:
   push:
@@ -17,13 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-
-      - name: Install dependencies
-        run: npm install --force
-
-      - name: Build React app
-        run: npm run build
-
+          
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://testbucketsq
