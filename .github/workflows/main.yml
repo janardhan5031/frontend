@@ -28,5 +28,5 @@ jobs:
         run: |
           aws s3 sync build/ s3://testbucketsq
         env:
-          AWS_ACCESS_KEY_ID: ""
-          AWS_SECRET_ACCESS_KEY: ""
+          AWS_ACCESS_KEY_ID: "AKIA6FLQ2HYG2X5DGZVK"
+          AWS_SECRET_ACCESS_KEY: "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"
