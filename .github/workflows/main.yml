@@ -29,7 +29,8 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 rm s3://testbucketsq --recursive --debug
+           export AWS_EC2_METADATA_DISABLED=true
+           aws s3 rm s3://testbucketsq --recursive --region us-east-1 --debug
           
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
