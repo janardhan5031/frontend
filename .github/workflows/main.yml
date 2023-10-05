@@ -13,14 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: "16"
-          
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y awscli
+        # Ensure AWS CLI is installed and available
+        env:
+          AWS_ACCESS_KEY_ID: "AKIA6FLQ2HYG2X5DGZVK"
+          AWS_SECRET_ACCESS_KEY: "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"
+
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://testbucketsq
+          
         env:
           AWS_ACCESS_KEY_ID: "AKIA6FLQ2HYG2X5DGZVK"
           AWS_SECRET_ACCESS_KEY: "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"
