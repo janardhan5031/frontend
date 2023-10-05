@@ -10,9 +10,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3.1.1
+        with:
+          version: 16.x
+
+      - name: Install dependencies
+        run: |
+          npm install @aws-amplify/cli -g
+          npm i
+      - name: Build project
+        run: CI=false npm run build
+
       - name: Deploy
         uses: Reggionick/s3-deploy@v3.1.1
         with:
           folder: build
           bucket: testbucketsq
-          bucket-region: ap-south-1
