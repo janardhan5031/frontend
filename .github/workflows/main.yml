@@ -1,29 +1,34 @@
-name: Continuous Deployment
+name: Deployment S3
+
 on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3.1.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          version: 16.x
+          node-version: "16"
 
-      - name: Install dependencies
+      - name: Install AWS CLI
         run: |
-          npm install @aws-amplify/cli -g
-          npm i
-      - name: Build project
-        run: CI=false npm run build
+          sudo apt-get install -y awscli
+        # Ensure AWS CLI is installed and available
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Deploy
-        uses: Reggionick/s3-deploy@v3.1.1
-        with:
-          folder: build
-          bucket: testbucketsq
+      - name: Deploy to S3
+        run: |
+          aws s3 rm s3://testbucketsq
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
